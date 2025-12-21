@@ -21,6 +21,7 @@ import { PricingCard } from "@/components/PricingCard";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import { FeaturesDemo } from "@/components/FeaturesBento";
 import { QASection } from "@/components/QASection";
+import { Footer } from "@/components/Footer";
 
 // --- Types ---
 
@@ -241,6 +242,10 @@ const ReviateLanding = () => {
       {/*QA SECTION*/}
       <section>
         <QASection />
+      </section>
+
+      <section>
+        <Footer />
       </section>
     </div>
   );
