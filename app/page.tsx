@@ -1,203 +1,208 @@
 "use client";
 
 import React from "react";
-import { motion } from "motion/react";
-import {
-  Check,
-  Zap,
-  Shield,
-  Code,
-  Rocket,
-  ChevronDown,
-  Plus,
-  Home,
-  Briefcase,
-  DollarSign,
-  MessageCircle,
-} from "lucide-react";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "motion/react";
+import { Briefcase, DollarSign, Home, MessageCircle } from "lucide-react";
+
+// Components
+import { WhyReviate } from "@/components/WhyReviate";
+import { AboutUs } from "@/components/AboutUs";
+import { FeaturesDemo } from "@/components/FeaturesBento"; // Ensure this matches your file name
 import { PricingCard } from "@/components/PricingCard";
-// Import your FloatingNav component (ensure the path matches your project structure)
-import { FloatingNav } from "@/components/ui/floating-navbar";
-import { FeaturesDemo } from "@/components/FeaturesBento";
 import { QASection } from "@/components/QASection";
 import { Footer } from "@/components/Footer";
-
-// --- Types ---
-
-interface ServiceCardProps {
-  icon: React.ReactNode;
-  title: string;
-  desc: string;
-  className?: string;
-}
-
-// interface PricingCardProps {
-//   tier: string;
-//   price: string;
-//   inr: string;
-//   weeks: string;
-//   features: string[];
-//   highlight?: boolean;
-// }
-
-// --- Components ---
-
-const ServiceCard = ({
-  icon,
-  title,
-  desc,
-  className = "",
-}: ServiceCardProps) => (
-  <motion.div
-    whileHover={{ y: -5 }}
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    className={`p-8 rounded-3xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-xl ${className}`}
-  >
-    <div className="mb-4 p-3 w-fit rounded-2xl bg-slate-50">{icon}</div>
-    <h3 className="text-xl font-bold mb-2 tracking-tight">{title}</h3>
-    <p className="text-slate-500 text-sm leading-relaxed">{desc}</p>
-  </motion.div>
-);
-
-// --- Main Page ---
+// import { FloatingNav } from "@/components/ui/floating-navbar"; // Optional
 
 const ReviateLanding = () => {
-  // Navigation Items for the Floating Navbar
-  const navItems = [
-    { name: "Home", link: "#", icon: <Home className="h-4 w-4" /> },
-    {
-      name: "Services",
-      link: "#services",
-      icon: <Briefcase className="h-4 w-4" />,
-    },
-    {
-      name: "Pricing",
-      link: "#pricing",
-      icon: <DollarSign className="h-4 w-4" />,
-    },
-    {
-      name: "Contact",
-      link: "mailto:hello@reviate.com",
-      icon: <MessageCircle className="h-4 w-4" />,
-    },
-  ];
+  // Parallax effect for Hero Text
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
 
   const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+    viewport: { once: true, margin: "-100px" },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   return (
-    <div className="min-h-screen bg-[#FCFCF9] text-[#13343B] selection:bg-teal-100 relative">
-      {/* FLOATING NAVBAR - Appears on Scroll */}
-      {/* <FloatingNav navItems={navItems} /> */}
-
-      {/* STATIC NAVBAR - Initial view */}
-      <nav className="absolute top-0 w-full z-40 border-b sticky border-slate-200/50 bg-[#FCFCF9]">
+    <div className="min-h-screen bg-[#FCFCF9] text-[#13343B] selection:bg-[#00a493] selection:text-white relative overflow-x-hidden font-sans">
+      {/* --- NAVBAR --- */}
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="fixed top-0 w-full z-50 border-b border-slate-200/60 bg-[#FCFCF9]/80 backdrop-blur-md supports-[backdrop-filter]:bg-[#FCFCF9]/60"
+      >
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-bold text-xl tracking-tighter">
-            <Image
-              src="/reviate_logo.png"
-              alt="Reviate Logo"
-              width={48}
-              height={56}
-              priority
-            />
-            {/*  <span className="text-2xl font-black">Reviate</span>
-             */}{" "}
+          <div className="flex items-center gap-3 cursor-pointer">
+            <div className="relative h-10 w-10 overflow-hidden">
+              {/* Replace with your actual logo path */}
+              <Image
+                src="/reviate_logo.png"
+                alt="Reviate Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+            <span className="text-xl font-bold tracking-tight text-slate-900">
+              Reviate
+            </span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-600">
-            <a
-              href="#services"
-              className="hover:text-teal-600 transition-colors"
+
+          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+            {["Services", "Process", "Pricing"].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="hover:text-[#00a493] transition-colors relative group"
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#00a493] transition-all group-hover:w-full" />
+              </a>
+            ))}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-[#00a493] text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-[#00a493]/20 hover:shadow-[#00a493]/40 transition-all"
             >
-              Services
-            </a>
-            <a
-              href="#pricing"
-              className="hover:text-teal-600 transition-colors"
-            >
-              Pricing
-            </a>
-            <button className="bg-teal-600 text-white px-6 py-2.5 rounded-full font-bold hover:bg-teal-700 transition-all active:scale-95 shadow-lg shadow-teal-500/20">
               Get Started
-            </button>
+            </motion.button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
-      {/* HERO SECTION */}
-      <section className="pt-48 pb-24 px-6 relative h-screen">
-        <div className="max-w-5xl mx-auto text-center">
+      {/* --- HERO SECTION --- */}
+      <section className="relative pt-48 pb-32 px-6 min-h-screen flex flex-col justify-center items-center overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[#00a493] opacity-[0.08] blur-[120px] rounded-full pointer-events-none -z-10" />
+
+        <motion.div
+          style={{ y: y1 }}
+          className="max-w-5xl mx-auto text-center relative z-10"
+        >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 border border-teal-200 bg-teal-50 text-teal-700 rounded-full text-xs font-bold uppercase tracking-widest"
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-2 mb-8 border border-[#00a493]/30 bg-[#00a493]/5 text-[#00a493] rounded-full text-xs font-bold uppercase tracking-widest"
           >
-            <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
-            Built for Modern Founders
+            <span className="w-2 h-2 rounded-full bg-[#00a493] animate-pulse shadow-[0_0_10px_#00a493]" />
+            Production Ready in Weeks
           </motion.div>
+
           <motion.h1
-            {...fadeInUp}
-            className="text-6xl md:text-8xl font-bold tracking-tighter mb-8 leading-[0.95] text-slate-900"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-6xl md:text-8xl font-extrabold tracking-tighter mb-8 leading-[1.1] text-slate-900"
           >
             Production-Ready <br />
-            <span className="text-teal-500 italic">TypeScript MVPs</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00a493] to-teal-400 italic pr-2">
+              TypeScript MVPs.
+            </span>
           </motion.h1>
+
           <motion.p
-            {...fadeInUp}
-            transition={{ delay: 0.1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
             className="text-lg md:text-xl text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
             We transform startup visions into scalable realities. Premium code,
             rapid deployment, and 100% source code ownership.
           </motion.p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="px-10 py-5 bg-teal-600 text-white rounded-2xl font-bold text-xl hover:bg-teal-700 transition-all shadow-xl shadow-teal-500/30">
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          >
+            <button className="px-10 py-4 bg-[#00a493] text-white rounded-2xl font-bold text-lg hover:bg-[#008c7e] transition-all shadow-xl shadow-[#00a493]/20 hover:scale-105 active:scale-95">
               View Pricing
             </button>
-            <button className="px-10 py-5 bg-white border border-slate-200 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all">
+            <button className="px-10 py-4 bg-white border border-slate-200 text-slate-700 rounded-2xl font-bold text-lg hover:bg-slate-50 hover:border-slate-300 transition-all hover:scale-105 active:scale-95">
               Book a Call
             </button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* BENTO GRID SERVICES */}
+      {/* --- SECTIONS --- */}
+
+      {/* 1. Why Reviate (Dark Contrast Section) */}
+      <section className="relative z-20">
+        <WhyReviate />
+      </section>
+
+      {/* 2. Services / Features (Grid) */}
       <section
         id="services"
-        className="py-24 max-w-7xl mx-auto px-6 scroll-mt-20"
+        className="py-32 max-w-7xl mx-auto px-6 scroll-mt-20"
       >
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight mb-4">Features</h2>
-          <p className="text-slate-500 font-medium">
-            Not just code but helping clients bounce ahead of their competition
-          </p>
-        </div>
-
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="text-center mb-20"
+        >
+          <motion.h2
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-slate-900"
+          >
+            Beyond Just Code
+          </motion.h2>
+          <motion.p
+            variants={fadeInUp}
+            className="text-slate-500 font-medium text-lg max-w-2xl mx-auto"
+          >
+            We don't just write software; we engineer competitive advantages.
+          </motion.p>
+        </motion.div>
         <FeaturesDemo />
       </section>
 
-      {/* PRICING SECTION */}
+      {/* 3. About Us (Full Screen / Dark) */}
+      <section id="process">
+        <AboutUs />
+      </section>
+
+      {/* 4. Pricing */}
       <section
         id="pricing"
-        className="py-24 max-w-7xl mx-auto px-6 scroll-mt-20"
+        className="py-32 max-w-7xl mx-auto px-6 scroll-mt-20 relative"
       >
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight mb-4">
+        <div className="text-center mb-20">
+          <motion.h2
+            {...fadeInUp}
+            className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900"
+          >
             Transparent Pricing
-          </h2>
-          <p className="text-slate-500 font-medium">
+          </motion.h2>
+          <motion.p
+            {...fadeInUp}
+            transition={{ delay: 0.1 }}
+            className="text-slate-500 font-medium text-lg"
+          >
             No hidden fees. Full IP ownership included.
-          </p>
+          </motion.p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           <PricingCard
             tier="Starter"
             price="$1,999"
@@ -239,14 +244,13 @@ const ReviateLanding = () => {
         </div>
       </section>
 
-      {/*QA SECTION*/}
-      <section>
+      {/* 5. QA Section */}
+      <section className="bg-slate-50/50 border-t border-slate-200">
         <QASection />
       </section>
 
-      <section>
-        <Footer />
-      </section>
+      {/* 6. Footer */}
+      <Footer />
     </div>
   );
 };
