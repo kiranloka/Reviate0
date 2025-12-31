@@ -8,71 +8,70 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-[#111111] text-white pt-20 pb-10">
+    <footer className="w-full bg-black text-white pt-20 pb-10 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-16">
           {/* -------------------------------------------------------------------------- */
-          /*  Brand Column                                                               */
+          /* Brand Column (Span 4)                                                      */
           /* -------------------------------------------------------------------------- */}
-          <div className="col-span-1 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <img
-                src="/reviate_logo.png"
-                alt="Reviate Logo"
-                className="h-10 w-auto object-contain"
-              />
+          <div className="col-span-1 lg:col-span-4">
+            <Link href="/" className="flex items-center gap-3 mb-6">
+              <ReviateLogo className="h-8 w-8 text-white" />
               <span className="text-xl font-bold tracking-tight text-white">
                 Reviate
               </span>
             </Link>
-            <p className="text-neutral-400 text-sm leading-relaxed max-w-xs">
-              Building scalable, production-grade applications for startups and
-              visionaries. From concept to IPO, we are your technical partner.
+            <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">
+              Building scalable, production-grade applications for visionaries.
+              We bridge the gap between "looks good" and "works at scale."
             </p>
           </div>
 
           {/* -------------------------------------------------------------------------- */
-          /*  Navigation Columns                                                         */
+          /* Navigation Columns (Span 2 or 3 each)                                      */
           /* -------------------------------------------------------------------------- */}
 
-          {/* Column 1: Services */}
-          <div>
-            <h3 className="font-semibold text-white mb-6">Services</h3>
+          <div className="col-span-1 lg:col-span-3 lg:col-start-6">
+            <h3 className="font-semibold text-white mb-6 text-sm uppercase tracking-wider">
+              Services
+            </h3>
             <ul className="flex flex-col gap-3">
               <FooterLink href="#">MVP Development</FooterLink>
-              <FooterLink href="#">Web Application Design</FooterLink>
-              <FooterLink href="#">SEO Optimisation</FooterLink>
+              <FooterLink href="#">Web App Design</FooterLink>
+              <FooterLink href="#">Technical SEO</FooterLink>
               <FooterLink href="#">Scalable Architecture</FooterLink>
             </ul>
           </div>
 
-          {/* Column 2: Company */}
-          <div>
-            <h3 className="font-semibold text-white mb-6">Company</h3>
+          <div className="col-span-1 lg:col-span-2">
+            <h3 className="font-semibold text-white mb-6 text-sm uppercase tracking-wider">
+              Company
+            </h3>
             <ul className="flex flex-col gap-3">
               <FooterLink href="#">About Us</FooterLink>
-              <FooterLink href="#">Our Process</FooterLink>
+              <FooterLink href="#">Process</FooterLink>
               <FooterLink href="#">Careers</FooterLink>
               <FooterLink href="#">Contact</FooterLink>
             </ul>
           </div>
 
-          {/* Column 3: Legal */}
-          <div>
-            <h3 className="font-semibold text-white mb-6">Legal</h3>
+          <div className="col-span-1 lg:col-span-2">
+            <h3 className="font-semibold text-white mb-6 text-sm uppercase tracking-wider">
+              Legal
+            </h3>
             <ul className="flex flex-col gap-3">
-              <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
-              <FooterLink href="/terms-of-service">Terms of Service</FooterLink>
-              <FooterLink href="/cookie-policy">Cookie Policy</FooterLink>
+              <FooterLink href="#">Privacy Policy</FooterLink>
+              <FooterLink href="#">Terms of Service</FooterLink>
+              <FooterLink href="#">Cookie Policy</FooterLink>
             </ul>
           </div>
         </div>
 
         {/* -------------------------------------------------------------------------- */
-        /*  Bottom Bar: Socials & Copyright                                            */
+        /* Bottom Bar                                                                 */
         /* -------------------------------------------------------------------------- */}
-        <div className="border-t border-neutral-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-neutral-500 text-sm">
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-neutral-600 text-sm">
             &copy; {currentYear} Reviate Agency. All rights reserved.
           </p>
 
@@ -88,8 +87,26 @@ export function Footer() {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                               Sub-Components                               */
+/* Sub-Components                               */
 /* -------------------------------------------------------------------------- */
+
+const ReviateLogo = ({ className }: { className?: string }) => (
+  <svg
+    viewBox="0 0 200 200"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <path
+      d="M64.8584 85.3672C64.8584 85.3672 58.3716 88.8058 53.4427 94.3547C48.5137 99.9037 40.0152 114.639 40.0152 114.639L66.5537 132.417C66.5537 132.417 74.3561 121.54 78.1399 117.225C82.5155 112.235 90.4414 109.146 90.4414 109.146V97.9443L74.8598 88.1636L64.8584 85.3672Z"
+      fill="currentColor"
+    />
+    <path
+      d="M115.252 59.9837L72.5674 60.7411L61.8601 64.2413L53.096 70.6394L60.2172 79.9036L67.2779 82.1615L76.6865 84.8257L95.522 95.7185V108.365C95.522 108.365 105.679 111.399 111.015 117.225C116.35 123.05 119.265 133.199 119.265 133.199H143.752C143.752 133.199 139.38 114.12 128.417 106.281C117.455 98.4432 106.273 98.0413 106.273 98.0413L105.516 83.8519L133.659 67.5107L133.899 60.4832L115.252 59.9837Z"
+      fill="currentColor"
+    />
+  </svg>
+);
 
 const FooterLink = ({
   href,
@@ -102,7 +119,7 @@ const FooterLink = ({
     <li>
       <Link href={href} className="group flex items-center gap-2 w-fit">
         <motion.span
-          className="text-neutral-400 text-sm group-hover:text-[#00A493] transition-colors duration-200"
+          className="text-neutral-500 text-sm group-hover:text-[#00A493] transition-colors duration-200"
           whileHover={{ x: 2 }}
         >
           {children}
@@ -124,7 +141,7 @@ const SocialIconLink = ({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-neutral-500 hover:text-[#00A493] transition-colors duration-200"
+      className="text-neutral-600 hover:text-[#00A493] transition-colors duration-200"
     >
       {icon}
     </a>
@@ -132,7 +149,7 @@ const SocialIconLink = ({
 };
 
 /* -------------------------------------------------------------------------- */
-/*                                  Icons                                     */
+/* Icons                                   */
 /* -------------------------------------------------------------------------- */
 
 const TwitterIcon = () => (
