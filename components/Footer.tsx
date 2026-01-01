@@ -3,82 +3,30 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
+import { TextHoverEffect } from "./ui/text-hover-effect";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="w-full bg-black text-white pt-20 pb-10 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-16">
-          {/* -------------------------------------------------------------------------- */
-          /* Brand Column (Span 4)                                                      */
-          /* -------------------------------------------------------------------------- */}
-          <div className="col-span-1 lg:col-span-4">
-            <Link href="/" className="flex items-center gap-3 mb-6">
-              <ReviateLogo className="h-8 w-8 text-white" />
-              <span className="text-xl font-bold tracking-tight text-white">
-                Reviate
-              </span>
-            </Link>
-            <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">
-              Building scalable, production-grade applications for visionaries.
-              We bridge the gap between "looks good" and "works at scale."
-            </p>
-          </div>
-
-          {/* -------------------------------------------------------------------------- */
-          /* Navigation Columns (Span 2 or 3 each)                                      */
-          /* -------------------------------------------------------------------------- */}
-
-          <div className="col-span-1 lg:col-span-3 lg:col-start-6">
-            <h3 className="font-semibold text-white mb-6 text-sm uppercase tracking-wider">
-              Services
-            </h3>
-            <ul className="flex flex-col gap-3">
-              <FooterLink href="#">MVP Development</FooterLink>
-              <FooterLink href="#">Web App Design</FooterLink>
-              <FooterLink href="#">Technical SEO</FooterLink>
-              <FooterLink href="#">Scalable Architecture</FooterLink>
-            </ul>
-          </div>
-
-          <div className="col-span-1 lg:col-span-2">
-            <h3 className="font-semibold text-white mb-6 text-sm uppercase tracking-wider">
-              Company
-            </h3>
-            <ul className="flex flex-col gap-3">
-              <FooterLink href="#">About Us</FooterLink>
-              <FooterLink href="#">Process</FooterLink>
-              <FooterLink href="#">Careers</FooterLink>
-              <FooterLink href="#">Contact</FooterLink>
-            </ul>
-          </div>
-
-          <div className="col-span-1 lg:col-span-2">
-            <h3 className="font-semibold text-white mb-6 text-sm uppercase tracking-wider">
-              Legal
-            </h3>
-            <ul className="flex flex-col gap-3">
-              <FooterLink href="#">Privacy Policy</FooterLink>
-              <FooterLink href="#">Terms of Service</FooterLink>
-              <FooterLink href="#">Cookie Policy</FooterLink>
-            </ul>
-          </div>
+      <div className="container mx-auto px-4">
+        {/* Text Hover Effect Section */}
+        <div className="h-[40vh] flex items-center justify-center opacity-20 hover:opacity-100 transition-opacity duration-500 ease-in-out">
+          <TextHoverEffect text="REVIATE" duration={0.5} />
         </div>
 
-        {/* -------------------------------------------------------------------------- */
-        /* Bottom Bar                                                                 */
-        /* -------------------------------------------------------------------------- */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-neutral-600 text-sm">
-            &copy; {currentYear} Reviate Agency. All rights reserved.
-          </p>
-
-          <div className="flex items-center gap-6">
-            <SocialIconLink href="#" icon={<TwitterIcon />} />
-            <SocialIconLink href="#" icon={<LinkedInIcon />} />
-            <SocialIconLink href="#" icon={<GithubIcon />} />
+        {/* Copyright and Privacy Policy Line */}
+        <div className="mt-12 pt-8 border-t border-white/10">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-neutral-500">
+            <span>© {currentYear} Reviate. All rights reserved.</span>
+            <span className="hidden sm:inline">•</span>
+            <Link
+              href="/privacy-policy"
+              className="hover:text-[#00A493] transition-colors duration-200"
+            >
+              Privacy Policy
+            </Link>
           </div>
         </div>
       </div>
