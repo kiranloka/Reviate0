@@ -6,24 +6,29 @@ import { cn } from "@/lib/utils";
 
 const faqs = [
   {
-    question: "How long does it take to build an MVP?",
+    question: "Do I really own the source code?",
     answer:
-      "Typically, we go from concept to launch in 4-8 weeks. We focus on core features first to help you find product-market fit rapidly, without sacrificing code quality or scalability.",
+      "100% Yes. Unlike agencies that hold your IP hostage, we transfer the full GitHub repository to you upon completion. You own every line of code, design asset, and database schema. No vendor lock-in, ever.",
   },
   {
-    question: "Do you handle both design and development?",
+    question: "How is this different from No-Code tools?",
     answer:
-      "Yes. We are a full-cycle agency. We start with pixel-perfect UX/UI design to ensure a sleek interface, then move to rigorous development using modern frameworks to bring that vision to life.",
+      "No-code tools are great for prototypes but fail at scale. We build production-ready applications using TypeScript and Next.js. This means your platform is fast, secure, and ready to handle thousands of users from day one without hitting 'ceiling' limits.",
   },
   {
-    question: "What tech stack do you use?",
+    question: "What happens after the MVP is launched?",
     answer:
-      "We build for the future. Our standard stack includes Next.js for SEO-optimized frontends, Node.js or Python for robust backends, and PostgreSQL. This ensures your app is production-grade from day one.",
+      "We don't just disappear. All our plans include a dedicated support period (30-60 days) to squash bugs and ensure stability. Since we use standard, clean architecture, your future in-house team can easily pick up where we left off.",
   },
   {
-    question: "Will my website be optimized for SEO?",
+    question: "Can you help with the design as well?",
     answer:
-      "Absolutely. Technical SEO is baked into our development process. We ensure semantic HTML, fast load times (Core Web Vitals), and proper meta-tag architecture so you rank high automatically.",
+      "Absolutely. We aren't just coders; we are product builders. We handle the entire UI/UX process, creating high-fidelity designs in Figma before development begins to ensure your product looks as good as it functions.",
+  },
+  {
+    question: "How quickly can we go to market?",
+    answer:
+      "Speed is our specialty. For most MVPs, we target a 2-4 week delivery window. We achieve this by utilizing our pre-built, battle-tested boilerplate modules for common features (auth, payments, mailers) so we can focus entirely on your unique business logic.",
   },
 ];
 
@@ -38,7 +43,7 @@ export function QASection() {
           Common Questions
         </h2>
         <p className="mt-4 text-lg text-neutral-600 max-w-2xl mx-auto">
-          Everything you need to know about working with Reviate.
+          Everything you need to know about building with Reviate.
         </p>
       </div>
 
