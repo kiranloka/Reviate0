@@ -9,6 +9,7 @@ import {
   useSpring,
   useMotionTemplate,
 } from "motion/react";
+import { PointerHighlight } from "./ui/pointer-highlight";
 
 // --- Main Component ---
 
@@ -21,11 +22,8 @@ export function AboutUs() {
     offset: ["start end", "end start"],
   });
 
-  // Transform scroll progress to vertical movement for the background text
-  // This moves the text from y: 100 to y: -100 as you scroll past
   const bgTextY = useTransform(scrollYProgress, [0, 1], ["20%", "-20%"]);
 
-  // Stagger configurations for text reveal
   const staggerContainer = {
     hidden: { opacity: 0 },
     show: {
@@ -59,11 +57,11 @@ export function AboutUs() {
         }}
       />
 
-      {/* --- BACKGROUND OVERLAY TEXT (Reviate) --- */}
+      {/* --- BACKGROUND OVERLAY TEXT --- */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <motion.div
           style={{ y: bgTextY }}
-          className="font-black text-[15vw] md:text-[20vw] leading-none text-white opacity-[0.05] select-none tracking-tighter"
+          className="font-black text-[15vw] md:text-[20vw] leading-none text-white opacity-[0.1] select-none tracking-tighter"
         >
           Reviate
         </motion.div>
@@ -87,24 +85,38 @@ export function AboutUs() {
           </h4>
         </motion.div>
 
-        {/* 2. Scroll & Text Animations: The 'Reveal' */}
+        {/* 2. Scroll & Text Animations */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          className="max-w-5xl mb-24"
+          className="max-w-6xl mb-24"
         >
-          <h2 className="font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tighter">
+          <h2 className="font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tighter">
             <motion.span variants={textReveal} className="block">
-              We help businesses
+              Reviate help businesses
             </motion.span>
-            <motion.span variants={textReveal} className="block">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00a493] via-teal-400 to-[#00a493] bg-[length:200%_auto] animate-gradient">
-                Kick Start
-              </span>{" "}
+
+            <motion.span
+              variants={textReveal}
+              className="block items-center gap-4"
+            >
+              {/* UPDATED: Only highlighting 'Kick Start' */}
+              <span className="inline-flex align-baseline mr-3">
+                <PointerHighlight
+                  containerClassName="pt-2 px-1" // Adjustment for alignment
+                  rectangleClassName="rounded-xl border border-teal-400/50 bg-teal-400/10 shadow-[0_0_20px_rgba(45,212,191,0.15)]" // Colorful highlight
+                  pointerClassName="text-teal-400"
+                >
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00a493] via-teal-400 to-[#00a493] bg-[length:200%_auto] animate-gradient pb-1">
+                    Kick Start
+                  </span>
+                </PointerHighlight>
+              </span>
               their
             </motion.span>
+
             <motion.span variants={textReveal} className="block text-white/90">
               journey to market.
             </motion.span>
@@ -148,34 +160,22 @@ interface CardProps {
 
 const MagneticCard = ({ number, title, desc, delay }: CardProps) => {
   const ref = useRef<HTMLDivElement>(null);
-
-  // Mouse position logic
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
-  // Smooth spring animation for tilt
   const mouseXSpring = useSpring(x);
   const mouseYSpring = useSpring(y);
-
-  // Transform mouse position to rotation degrees
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!ref.current) return;
-
     const rect = ref.current.getBoundingClientRect();
-
-    // Calculate mouse position relative to card center (percentage -0.5 to 0.5)
     const width = rect.width;
     const height = rect.height;
-
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
-
     const xPct = mouseX / width - 0.5;
     const yPct = mouseY / height - 0.5;
-
     x.set(xPct);
     y.set(yPct);
   };
@@ -201,27 +201,19 @@ const MagneticCard = ({ number, title, desc, delay }: CardProps) => {
       }}
       className="group relative h-full perspective-1000"
     >
-      {/* Card Container */}
       <div className="relative h-full p-8 rounded-xl bg-[#0a0a0a] border border-white/5 overflow-hidden transition-colors duration-500 group-hover:border-[#00a493]/30">
-        {/* Spotlight Effect (Radial Gradient following mouse) */}
         <SpotlightOverlay />
-
         <div className="relative z-10 flex flex-col h-full pointer-events-none">
-          {/* Number */}
           <div className="flex justify-between items-start mb-12">
             <span className="text-4xl font-bold text-white/10 font-mono transition-colors duration-300 group-hover:text-[#00a493]/20">
               {number}
             </span>
             <div className="w-2 h-2 rounded-full bg-[#00a493] opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[0_0_10px_#00a493]" />
           </div>
-
-          {/* Title with Slide Interaction */}
           <h5 className="text-2xl font-bold text-white mb-4 transition-all duration-300 group-hover:text-[#00a493] group-hover:translate-x-2">
             {title}
           </h5>
-
-          {/* Description */}
-          <p className="text-white/40 leading-relaxed text-sm transition-colors duration-300 group-hover:text-white/70">
+          <p className="text-white/40 leading-relaxed text-md transition-colors duration-300 group-hover:text-white/70">
             {desc}
           </p>
         </div>
