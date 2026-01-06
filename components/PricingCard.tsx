@@ -18,15 +18,18 @@ interface PricingCardProps {
   // Prop updated to allow simple strings OR detailed objects
   features: (string | FeatureItem)[];
   highlight?: boolean;
+  onGetStarted?: () => void;
 }
 
 // --- Sub-Component: Magnetic Button ---
 const MagneticButton = ({
   children,
   highlight,
+  onClick,
 }: {
   children: React.ReactNode;
   highlight?: boolean;
+  onClick?: () => void;
 }) => {
   const ref = useRef<HTMLButtonElement>(null);
 
@@ -58,6 +61,7 @@ const MagneticButton = ({
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onClick={onClick}
       style={{ x: mouseXSpring, y: mouseYSpring }}
       whileTap={{ scale: 0.95 }}
       aria-label="Get Started with this plan"
@@ -146,6 +150,7 @@ export const PricingCard = ({
   weeks,
   features,
   highlight,
+  onGetStarted,
 }: PricingCardProps) => {
   return (
     <motion.div
@@ -219,7 +224,9 @@ export const PricingCard = ({
 
       {/* Magnetic CTA */}
       <div className="mt-auto">
-        <MagneticButton highlight={highlight}>Get Started</MagneticButton>
+        <MagneticButton highlight={highlight} onClick={onGetStarted}>
+          Get Started
+        </MagneticButton>
       </div>
     </motion.div>
   );

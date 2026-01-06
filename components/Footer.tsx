@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { TextHoverEffect } from "./ui/text-hover-effect";
+import { ReviateLogo } from "./Logo";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -38,23 +39,6 @@ export function Footer() {
 /* Sub-Components                               */
 /* -------------------------------------------------------------------------- */
 
-const ReviateLogo = ({ className }: { className?: string }) => (
-  <svg
-    viewBox="0 0 200 200"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <path
-      d="M64.8584 85.3672C64.8584 85.3672 58.3716 88.8058 53.4427 94.3547C48.5137 99.9037 40.0152 114.639 40.0152 114.639L66.5537 132.417C66.5537 132.417 74.3561 121.54 78.1399 117.225C82.5155 112.235 90.4414 109.146 90.4414 109.146V97.9443L74.8598 88.1636L64.8584 85.3672Z"
-      fill="currentColor"
-    />
-    <path
-      d="M115.252 59.9837L72.5674 60.7411L61.8601 64.2413L53.096 70.6394L60.2172 79.9036L67.2779 82.1615L76.6865 84.8257L95.522 95.7185V108.365C95.522 108.365 105.679 111.399 111.015 117.225C116.35 123.05 119.265 133.199 119.265 133.199H143.752C143.752 133.199 139.38 114.12 128.417 106.281C117.455 98.4432 106.273 98.0413 106.273 98.0413L105.516 83.8519L133.659 67.5107L133.899 60.4832L115.252 59.9837Z"
-      fill="currentColor"
-    />
-  </svg>
-);
 
 const FooterLink = ({
   href,
