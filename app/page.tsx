@@ -20,6 +20,8 @@ import { FeaturesDemo } from "@/components/FeaturesBento";
 import { PricingCard } from "@/components/PricingCard";
 import { QASection } from "@/components/QASection";
 import { Footer } from "@/components/Footer";
+import { ReviateLogo } from "@/components/Logo";
+import { ContactModal } from "@/components/ContactModal";
 
 // --- NEW COMPONENT: Background Grid & Floating Icons ---
 const HeroBackground = () => {
@@ -98,6 +100,18 @@ const ReviateLanding = () => {
     },
   };
 
+  const handleBookACall = ()=>{
+    window.open("https://cal.com/kiran-kumar-loka-hnsgo4", "_blank");
+  }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState("");
+
+  const openModal = (plan: string) => {
+    setSelectedPlan(plan);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#FCFCF9] text-[#13343B] selection:bg-[#00a493] selection:text-white relative overflow-x-hidden font-sans">
       {/* --- NAVBAR --- */}
@@ -109,14 +123,8 @@ const ReviateLanding = () => {
       >
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer">
-            <div className="relative h-14 w-14 overflow-hidden">
-              <Image
-                src="/reviate.svg"
-                alt="Reviate Logo"
-                fill
-                className="object-contain"
-                priority
-              />
+            <div className="relative h-16 w-16 flex items-center justify-center text-[#00a493]">
+              <ReviateLogo className="w-full h-full" />
             </div>
             <span className="text-xl font-bold tracking-tight text-slate-900">
               Reviate
@@ -216,7 +224,8 @@ const ReviateLanding = () => {
               </span>
               <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
             </button>
-            <button className="px-10 py-4 bg-white border border-slate-200 text-slate-700 rounded-2xl font-bold text-lg hover:bg-slate-50 hover:border-slate-300 transition-all hover:scale-105 active:scale-95">
+            <button className="px-10 py-4 bg-white border border-slate-200 text-slate-700 rounded-2xl font-bold text-lg hover:bg-slate-50 hover:border-slate-300 transition-all hover:scale-105 active:scale-95"
+            onClick={handleBookACall}>
               Book a Call
             </button>
           </motion.div>
@@ -323,44 +332,55 @@ const ReviateLanding = () => {
             No hidden fees. Full IP ownership included.
           </motion.p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          {/* Tier 1: Frontend Only */}
           <PricingCard
+            onGetStarted={() => openModal("Starter")}
             tier="Starter"
-            price="$999"
-            inr="₹1,66,900"
-            weeks="2-3 weeks"
+            price="$1,200"
+            inr="₹1,02,000"
+            weeks="1-2 weeks"
             features={[
-              "Landing pages",
-              "UI/UX Design",
-              "SEO Optimized",
+              "Figma to React/Next.js",
+              "Pixel-Perfect Responsive",
+              "Tailwind CSS Styling",
+              "Basic SEO & Meta Tags",
+              "Up to 5 Static Pages",
+            ]}
+          />
+
+          {/* Tier 2: The SaaS Engine (Most Popular) */}
+          <PricingCard
+            onGetStarted={() => openModal("Professional")}
+            highlight
+            tier="Professional"
+            price="$4,500"
+            inr="₹3,82,500"
+            weeks="4-6 weeks"
+            features={[
+              "SaaS Core Infrastructure",
+              "User Auth (Clerk/NextAuth)",
+              "Stripe/Payment Integration",
+              "Database & User Dashboard",
+              "Protected API Routes",
               "30 Days Support",
             ]}
           />
+
+          {/* Tier 3: Full Custom Product */}
           <PricingCard
-            highlight
-            tier="Professional"
-            price="$2,999"
-            inr="₹4,16,900"
-            weeks="4-5 weeks"
-            features={[
-              "SaaS MVP",
-              "User Auth",
-              "Stripe Payments",
-              "Admin Dashboard",
-              "60 Days Support",
-            ]}
-          />
-          <PricingCard
+            onGetStarted={() => openModal("Enterprise")}
             tier="Enterprise"
-            price="$6,999"
-            inr="₹10,84,900"
-            weeks="8-10 weeks"
+            price="$9,500"
+            inr="₹8,07,500"
+            weeks="8-12 weeks"
             features={[
-              "Full Platforms",
-              "Real-time Features",
-              "Advanced Dashboards",
-              "Unlimited Revisions",
+              "Full MVP Launch",
+              "Admin Dashboard & Analytics",
+              "Real-time Features / Sockets",
+              "File Uploads & Email System",
+              "Advanced Search/Filtering",
+              "Unlimited Revisions (Dev Phase)",
             ]}
           />
         </div>
@@ -373,6 +393,13 @@ const ReviateLanding = () => {
 
       {/* 6. Footer */}
       <Footer />
+
+      {/* 7. Contact Modal */}
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        planName={selectedPlan}
+      />
     </div>
   );
 };
